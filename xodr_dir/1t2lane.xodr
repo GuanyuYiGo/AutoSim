@@ -1,0 +1,46 @@
+<?xml version="1.0" standalone="yes"?>
+<OpenDRIVE xmlns="http://www.opendrive.org" version="1.4">
+  <header revMajor="1" revMinor="4" name="1t2lane" version="1.00" date="2024-12-25" north="0" south="0" east="0" west="0" vendor="ExampleVendor"/>
+  <road name="MainRoad" length="300.0" id="1" junction="-1">
+    <link>
+      <successor elementType="road" elementId="2" contactPoint="start"/>
+    </link>
+    <planView>
+      <geometry s="0.0" x="0.0" y="0.0" hdg="0.0" length="100.0">
+        <line/>
+      </geometry>
+      <geometry s="100.0" x="100.0" y="0.0" hdg="-0.05" length="100.0">
+        <line/>
+      </geometry>
+      <geometry s="200.0" x="200.0" y="0.0" hdg="0.00" length="100.0">
+        <line/>
+      </geometry>
+    </planView>
+    <lanes>
+      <laneSection s="0.0">
+        <center>
+          <lane id="0" type="driving" level="false">
+            <width sOffset="100.0" a="0.0" b="-0.07" c="0.0" d="0.0"/>
+            <roadMark boundaryId="1" sOffset="0.0" type="solid" weight="standard" color="white" width="0.15"/>
+          </lane>
+        </center>
+        <left>
+          <lane id="1" type="driving" level="false">
+            <width sOffset="0.0" a="3.5" b="0.0" c="0.0" d="0.0"/>
+            <roadMark boundaryId="2" sOffset="0.0" type="solid" weight="standard" color="white" width="0.15"/>
+          </lane>
+        </left>
+        <right>
+          <lane id="-1" type="driving" level="false">
+            <width sOffset="0.0" a="3.5" b="0.00" c="0.0" d="0.0"/>
+            <width sOffset="50.0" a="3.5" b="0.07" c="0.0" d="0.0"/>
+            <width sOffset="100.0" a="7.0" b="-0.03" c="0.0" d="0.0"/>
+            <width sOffset="200.0" a="3.5" b="-0.00" c="0.0" d="0.0"/>
+            <roadMark boundaryId="3" sOffset="0.00" type="solid" weight="standard" color="white" width="0.12" laneChange="both" height="0.00">
+            </roadMark>
+          </lane>
+        </right>
+      </laneSection>
+    </lanes>
+  </road>
+</OpenDRIVE>

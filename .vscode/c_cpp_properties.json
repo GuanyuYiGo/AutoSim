@@ -1,0 +1,33 @@
+{
+  "configurations": [
+    {
+      "name": "Win64",
+      "includePath": [
+        "${workspaceFolder}/**",
+        "D:/Eigen3.4/eigen-3.4.0/eigen-3.4.0",
+        "C:/Program Files (x86)/MathGL2/include",
+        "D:/armadillo/armadillo-14.0.1/include",
+        "C:/Program Files (x86)/zlib/include",
+        "C:/Program Files (x86)/libpng/include",
+        "D:/opencv/opencv-4.9.0/build/install/include",
+        "D:/opencv/opencv-4.9.0/build/install/include/opencv2",
+        "D:/gsl/gsl/**",
+        "D:/OpenDrive/tinyxml2/**",
+        "D:/Users/25104/AppData/Local/Programs/Python/Python310/include/**",
+        "D:/Users/25104/AppData/Local/Programs/Python/Python310/Lib/site-packages/numpy/core/include/",
+        "D:/Users/25104/AppData/Local/Programs/Python/Python310/Lib/site-packages/pybind11/include"
+      ],
+      "defines": [
+        "_DEBUG",
+        "UNICODE",
+        "_UNICODE"
+      ],
+      "windowsSdkVersion": "10.0.18362.0",
+      "compilerPath": "D:/Tools/mingw1120_64/bin/g++.exe",
+      "cStandard": "c17",
+      "cppStandard": "c++11",
+      "intelliSenseMode": "gcc-x64"
+    }
+  ],
+  "version": 4
+}
