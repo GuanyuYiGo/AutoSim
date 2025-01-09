@@ -1,3 +1,0 @@
-D:\Tools\CMake_64\bin\cmake.exe -E rm -f CMakeFiles\planningPcoS.dir/objects.a
-D:\Tools\mingw1120_64\bin\ar.exe qc CMakeFiles\planningPcoS.dir/objects.a @CMakeFiles\planningPcoS.dir\objects1.rsp
-D:\Tools\mingw1120_64\bin\c++.exe  -Wl,-e,WinMainCRTStartup -mwindows -Wl,--whole-archive CMakeFiles\planningPcoS.dir/objects.a -Wl,--no-whole-archive -o planningPcoS.exe -Wl,--out-implib,libplanningPcoS.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\planningPcoS.dir\linkLibs.rsp
