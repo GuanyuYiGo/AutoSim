@@ -106,20 +106,22 @@ void Visualizer::plotLaneLine(const Line &line, const std::string &color) {
   plt::plot(x, y, color);
 }
 
-void Visualizer::visualizePerception(const std::vector<Line> &percetion_lines) {
+void Visualizer::visualizePerception(const std::vector<Line> &percetion_lines,
+                                     const Line &ref_line,
+                                     const float &acceleration_request,
+                                     const float &steerwheel_request) {
   plt::figure(2);
   py::object plt = py::module::import("matplotlib.pyplot");
   plt.attr("figure")(2);
   // 获取当前图窗并设置位置和大小
   py::object manager = plt.attr("gcf")().attr("canvas").attr("manager");
   py::object window = manager.attr("window");
-  window.attr("wm_geometry")(
-      "800x600+1120+0"); // 设置窗口大小为 800x600，位置为 (100, 100)
+  window.attr("wm_geometry")("800x800+1120+0"); // 设置窗口大小为 800x600
 
   plt::clf();
   plt::xlim(0.0f, 100.0f);
   plt::ylim(-10.0f, 10.0f);
-  plt::set_aspect(0.5);
+  plt::set_aspect(1);
 
   // 绘制左车道线
   if (percetion_lines[0].getID() != 0) {
@@ -138,6 +140,28 @@ void Visualizer::visualizePerception(const std::vector<Line> &percetion_lines) {
   if (percetion_lines[3].getID() != 0) {
     plotLaneLine(percetion_lines[3], "y-");
   }
+
+  // 绘制参考线
+  if (ref_line.getID() != 0) {
+    plotLaneLine(ref_line, "k--");
+  }
+
+  // 在右上角显示纵向加速度
+  plt::text(80, 9,
+            "Acceleration: " + std::to_string(acceleration_request) + " m/s^2");
+
+  // 在右上角绘制方向盘转角
+  float angle = steerwheel_request;
+  float radius = 3.0;
+  std::vector<float> arc_x, arc_y;
+  int num_points = 100;
+  for (int i = 0; i <= num_points; ++i) {
+    float theta = angle * i / num_points;
+    arc_x.push_back(90 + radius * std::cos(theta));
+    arc_y.push_back(9 + radius * std::sin(theta));
+  }
+  std::string color = (angle >= 0) ? "red" : "blue";
+  plt::plot(arc_x, arc_y, color);
 
   plt::pause(0.01);
 }

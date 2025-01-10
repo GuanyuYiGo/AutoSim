@@ -1,10 +1,26 @@
 #include "simulation.h"
 
 void Simulator::StepSimulation(const Map &map, std::vector<Vehicle> &vehicles) {
-  perceptioner.percepation_common(map, vehicles);
-  visualizer.visualizePerception(perceptioner.getPerceptionLines());
-  planner.plan_common(vehicles);
-  controller.controller_common(vehicles);
+  for (auto &vehicle : vehicles) {
+    if (vehicle.getisEgo()) {
+      std::vector<Line> sensor_detect_lines;
+      vehicle.lane_mark_sensor.UpdateAndGetLineMarkCoef(
+          map, vehicle.getPosition(), vehicle.getTheta(), sensor_detect_lines);
+      vehicle.perceptioner.percepation_common(map, sensor_detect_lines);
+      vehicle.planner.plan_common(vehicle.perceptioner.getPerceptionLines());
+      vehicle.controller.controller_common(vehicle.planner.getRefLine());
+      visualizer.visualizePerception(
+          vehicle.perceptioner.getPerceptionLines(),
+          vehicle.planner.getRefLine(),
+          vehicle.controller.getAccelerationRequest(),
+          vehicle.controller.getSteerwheelRequest());
+      vehicle.updateBicycleModel(vehicle.controller.getAccelerationRequest(),
+                                 vehicle.controller.getSteerwheelRequest());
+    } else {
+      // TODO: Implement the behavior of non-ego vehicles
+      continue;
+    }
+  }
   visualizer.visualize_common(map, vehicles);
 }
 

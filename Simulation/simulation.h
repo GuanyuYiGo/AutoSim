@@ -19,9 +19,6 @@ public:
   void endSimulation();
 
 private:
-  Perception perceptioner;
-  Planner planner;
-  Controller controller;
   Visualizer visualizer;
   float end_time;
   float step;
