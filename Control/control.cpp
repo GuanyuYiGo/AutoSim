@@ -1,17 +1,20 @@
 #include "control.h"
 
-void Controller::controller_common(const Line &ref_line) {
-  float accerlation_request = 1.f; // TODO: longitudinal control
-  float lateral_error = 2 * ref_line.getCoef()[0] +
-                        ref_line.getCoef()[1] * 20.f +
-                        ref_line.getCoef()[2] * 20.f * 50.f +
-                        ref_line.getCoef()[3] * 20.f * 20.f * 20.f;
-  float heading_error = ref_line.getCoef()[1];
-  float steerwheel_request = Kp * lateral_error; // TODO: lateral control
-  lateral_integral_error_ += lateral_error;
-  float derivative_error = lateral_error - lateral_previous_error_;
-  steerwheel_request += Ki * lateral_integral_error_ + Kd * derivative_error;
-  lateral_previous_error_ = lateral_error;
-  setAccelerationRequest(accerlation_request);
+void Controller::controller_common(const Line &ref_line, const float &velocity,
+                                   const float &steerwheel_angle,
+                                   const float &heading,
+                                   const float &wheel_base) {
+  // This controller is a simple controller that sets the acceleration request
+  // to 0 and the steering wheel request based ref line and bicycle model.
+  float acceleration_request = 0.f; // TODO: longitudinal control
+  float steerwheel_request = 0.f;
+  if (ref_line.getID() != 0) {
+    float desired_y = ref_line.getCoef()[0];
+    float desired_theta = std::asin(desired_y / velocity);
+    float desired_frontwheel_rad =
+        std::atan((desired_theta - heading) * wheel_base / velocity);
+    steerwheel_request = desired_frontwheel_rad * rad2deg * 25.f;
+  }
+  setAccelerationRequest(acceleration_request);
   setSteerwheelRequest(steerwheel_request);
 }

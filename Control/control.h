@@ -1,6 +1,7 @@
 #ifndef CONTROL_H
 #define CONTROL_H
 #include "typedefine.h"
+#include <cmath>
 
 class Controller {
 public:
@@ -9,7 +10,9 @@ public:
   // void controller_PID();
   // void controller_LQR();
   // void controller_MPC();
-  void controller_common(const Line &ref_line);
+  void controller_common(const Line &ref_line, const float &velocity,
+                         const float &steerwheel_angle, const float &heading,
+                         const float &wheel_base);
   void setAccelerationRequest(float accerlation_request) {
     this->accerlation_request_ = accerlation_request;
   }

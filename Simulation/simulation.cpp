@@ -8,7 +8,9 @@ void Simulator::StepSimulation(const Map &map, std::vector<Vehicle> &vehicles) {
           map, vehicle.getPosition(), vehicle.getTheta(), sensor_detect_lines);
       vehicle.perceptioner.percepation_common(map, sensor_detect_lines);
       vehicle.planner.plan_common(vehicle.perceptioner.getPerceptionLines());
-      vehicle.controller.controller_common(vehicle.planner.getRefLine());
+      vehicle.controller.controller_common(
+          vehicle.planner.getRefLine(), vehicle.getVelocity(),
+          vehicle.getSteeringAngle(), vehicle.getTheta(), vehicle.getLength());
       visualizer.visualizePerception(
           vehicle.perceptioner.getPerceptionLines(),
           vehicle.planner.getRefLine(),

@@ -9,6 +9,7 @@ struct Point {
 };
 
 const float deg2rad = 0.017453;
+const float rad2deg = 57.295779;
 class Line {
 public:
   Line() {}
@@ -36,6 +37,15 @@ public:
   Point getEndPoint() const { return end_point; }
   std::vector<float> getCoef() const { return coef; }
   bool getIsVertical() const { return is_vertical; }
+  void clear() {
+    ID = 0;
+    length = 0.0;
+    width = 0.0;
+    start_point = {0.0, 0.0};
+    end_point = {0.0, 0.0};
+    coef.clear();
+    is_vertical = false;
+  }
 
 private:
   bool is_vertical = false;

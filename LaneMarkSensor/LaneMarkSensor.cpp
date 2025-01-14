@@ -12,10 +12,12 @@ void LaneMarkSensor::generateLMSDetectLine(const float &step_distance,
   float dx = startpoint1.x - startpoint2.x;
   float dy = startpoint1.y - startpoint2.y;
   float length = std::sqrt(dx * dx + dy * dy);
-  float ux = dx / length;
-  float uy = dy / length;
+  float ux_act = dx / length;
+  float uy_act = dy / length;
+  float ux = std::abs(ux_act) > 0.1f ? ux_act : 0.f;
+  float uy = std::abs(uy_act) > 0.1f ? uy_act : 0.f;
   LMSDetectLines.clear();
-  LMSDetectLines.reserve(static_cast<size_t>(step_number));
+  LMSDetectLines.reserve(39);
   for (int i = 0; i < step_number; ++i) {
     float offset = step_distance * (i + 1);
     Point new_start_point1, new_start_point2;
@@ -28,11 +30,11 @@ void LaneMarkSensor::generateLMSDetectLine(const float &step_distance,
     line.setEndPoint(new_start_point2);
     line.setLength(length);
     float line_c0, line_c1;
-    if (new_start_point1.x == new_start_point2.x) {
+    if (std::abs(ux) < 1e-6) {
       line.setIsVertical(true);
       line_c0 = new_start_point1.x;
       line_c1 = 0.f;
-    } else if (new_start_point1.y == new_start_point2.y) {
+    } else if (std::abs(uy) < 1e-6) {
       line_c0 = new_start_point1.y;
       line_c1 = 0.f;
     } else {
@@ -43,6 +45,7 @@ void LaneMarkSensor::generateLMSDetectLine(const float &step_distance,
     line.setCoef({line_c0, line_c1, 0.f, 0.f});
     LMSDetectLines.push_back(std::move(line));
   }
+  int a = 1;
 }
 
 bool LaneMarkSensor::detectIntersection(const Line &map_line,
@@ -156,10 +159,12 @@ install location.                  |
   corner4.y = install_location.y -
               lateral_check_range * std::cos(install_heading) * 0.5f;
   setCheckRangeCorners({corner1, corner2, corner3, corner4});
-  // step is 2m, corner1->corner4 is first detected line until corner2-> corner3
+  // step is 2m, corner1->corner4 is first detected line until corner2->
+  // corner3
   float lms_step = 2.f;
   generateLMSDetectLine(lms_step, 39.f, corner1, corner4);
-  // traverse all lines in map to find the lines which have intersection points
+  // traverse all lines in map to find the lines which have intersection
+  // points
   std::unordered_map<int, std::vector<Point>> intersection_points;
   for (const Line &map_line : map.lines) {
     for (const Line &detect_line : LMSDetectLines) {

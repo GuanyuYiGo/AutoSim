@@ -16,6 +16,8 @@ public:
   }
   bool getisEgo() const { return is_ego_; }
   void setisEgo(bool is_ego) { this->is_ego_ = is_ego; }
+  float getVelocity() const { return velocity_; }
+  float getSteeringAngle() const { return steering_angle_; }
   float getLength() { return length_; }
   float getWidth() const { return width_; }
   void setTheta(float theta) { this->theta_ = theta; }

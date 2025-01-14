@@ -95,5 +95,15 @@
 		"qr": "cpp"
 	},
 	"editor.suggest.snippetsPreventQuickSuggestions": false,
-	"aiXcoder.showTrayIcon": true
+	"aiXcoder.showTrayIcon": true,
+	"terminal.integrated.profiles.windows": {
+		"cmder": {
+			"path": "C:\\WINDOWS\\System32\\cmd.exe",
+			"args": [
+				"/K",
+				"D:\\cmder\\vendor\\bin\\vscode_init.cmd"
+			]
+		}
+	},
+	"terminal.integrated.defaultProfile.windows": "cmder"
 }

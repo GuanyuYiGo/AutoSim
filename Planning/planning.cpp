@@ -1,6 +1,7 @@
 #include "planning.h"
 
 void Planner::plan_common(const std::vector<Line> &perception_lines) {
+  ref_line_.clear();
   if (perception_lines[0].getID() != 0 && perception_lines[1].getID() != 0) {
     Line ref_line;
     ref_line.setID(perception_lines[0].getID() + perception_lines[1].getID());

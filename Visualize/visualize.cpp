@@ -8,7 +8,7 @@ void Visualizer::visualize_common(const Map &map,
   plt::figure(1);
   plt::clf();
   plt::xlim(0.0f, std::max(map.length, map.width));
-  plt::ylim(0.0f, std::max(map.length, map.width));
+  plt::ylim(0.0f, 30.f);
   // plt::xlim(0.0f, 20.0f);
   // plt::ylim(0.0f, 20.0f);
 
@@ -116,7 +116,7 @@ void Visualizer::visualizePerception(const std::vector<Line> &percetion_lines,
   // 获取当前图窗并设置位置和大小
   py::object manager = plt.attr("gcf")().attr("canvas").attr("manager");
   py::object window = manager.attr("window");
-  window.attr("wm_geometry")("800x800+1120+0"); // 设置窗口大小为 800x600
+  window.attr("wm_geometry")("800x800+1120+100"); // 设置窗口大小为 800x600
 
   plt::clf();
   plt::xlim(0.0f, 100.0f);
@@ -150,18 +150,9 @@ void Visualizer::visualizePerception(const std::vector<Line> &percetion_lines,
   plt::text(80, 9,
             "Acceleration: " + std::to_string(acceleration_request) + " m/s^2");
 
-  // 在右上角绘制方向盘转角
-  float angle = steerwheel_request;
-  float radius = 3.0;
-  std::vector<float> arc_x, arc_y;
-  int num_points = 100;
-  for (int i = 0; i <= num_points; ++i) {
-    float theta = angle * i / num_points;
-    arc_x.push_back(90 + radius * std::cos(theta));
-    arc_y.push_back(9 + radius * std::sin(theta));
-  }
-  std::string color = (angle >= 0) ? "red" : "blue";
-  plt::plot(arc_x, arc_y, color);
+  // 在右上角显示方向盘转角
+  plt::text(80, 7,
+            "Steerwheel: " + std::to_string(steerwheel_request) + " deg");
 
   plt::pause(0.01);
 }

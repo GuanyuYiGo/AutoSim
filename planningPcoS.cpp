@@ -2,7 +2,7 @@
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
                    LPSTR lpCmdLine, int nCmdShow) {
-  double simulation_time = 5.0;
+  double simulation_time = 10.0;
   double step = 0.02;
   double current_time = 0.0;
   Map map = defineMap();
